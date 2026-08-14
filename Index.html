@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhishek Shaju — Developer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<!-- Chakra Petch = temporary stand-in for "Proto Mono" until you drop the real font file in /fonts (see @font-face in style.css) -->
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="bg-fx" aria-hidden="true">
+  <canvas id="dotGrid"></canvas>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+</div>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-md navbar-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand logo-font" href="#home">&lt;AS/&gt;</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-md-center gap-md-4 mono-font">
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
+        <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+        <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item mt-2 mt-md-0">
+          <a class="btn btn-accent btn-sm mono-font" href="resume.pdf" target="_blank">Resume</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section id="home" class="hero d-flex align-items-center">
+  <div class="container">
+    <div class="row align-items-center gy-5">
+
+      <!-- left: name / intro -->
+      <div class="col-lg-7">
+        <p class="mono-font text-secondary mb-3 hero-greet">Hi, I'm</p>
+        <h1 class="logo-font hero-title mb-4"><span id="heroName"></span><span class="cursor"></span></h1>
+        <p class="tagline text-secondary mb-5">
+          B.Tech AI &amp; Data Science student | Python &amp; Web Developer
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="#projects" class="btn btn-accent mono-font px-4 py-3">View projects →</a>
+          <a href="resume.pdf" class="btn btn-outline-ghost mono-font px-4 py-3" download="Abhishek_Shaju_Resume.pdf">Download resume ↓</a>
+        </div>
+      </div>
+
+      <!-- right: terminal widget -->
+      <div class="col-lg-5">
+        <div class="terminal-card notched mono-font hero-terminal">
+          <div class="terminal-head">
+            <span class="dot dot-r"></span>
+            <span class="dot dot-y"></span>
+            <span class="dot dot-g"></span>
+            <span class="terminal-title">whoami.py</span>
+          </div>
+          <div class="terminal-body" id="termBody"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="py-4 py-md-5">
+  <div class="container py-3">
+    <p class="eyebrow mono-font"><i class="bi bi-person-badge me-2"></i>About me</p>
+    <h2 class="logo-font section-title mb-4">// who I am</h2>
+    <div class="row g-5 align-items-start">
+      <div class="col-md-7 text-secondary reveal">
+        <p>Hi, I'm Abhishek Shaju, a B.Tech student specializing in Artificial Intelligence and Data Science with a strong interest in Python and web development. I enjoy building practical applications that solve real-world problems and continuously improving my programming and problem-solving skills.</p>
+        <p>I have experience working with Python, Django, HTML, CSS, JavaScript, Bootstrap, SQL, and MongoDB. I have also explored areas such as Machine Learning, Data Science, and Generative AI.</p>
+        <p>Through my academic projects, internships, and personal projects, I have gained hands-on experience in developing web applications, working with databases, and implementing practical solutions. I am currently looking for opportunities where I can apply my skills, learn from experienced developers, and grow as a software developer.</p>
+      </div>
+      <div class="col-md-5">
+        <div class="code-card mono-font notched p-4 reveal">
+          <div class="text-muted">// developer.json</div>
+          <div>{</div>
+          <div class="ps-3"><span class="text-accent">"name"</span>: <span class="text-green">"Abhishek Shaju"</span>,</div>
+          <div class="ps-3"><span class="text-accent">"role"</span>: <span class="text-green">"Full-stack Developer"</span>,</div>
+          <div class="ps-3"><span class="text-accent">"stack"</span>: [<span class="text-green">"Python"</span>, <span class="text-green">"Django"</span>],</div>
+          <div class="ps-3"><span class="text-accent">"based_in"</span>: <span class="text-green">"Kozhikode , Kerala, India"</span>,</div>
+          <div class="ps-3"><span class="text-accent">"open_to"</span>: <span class="text-green">"opportunities"</span></div>
+          <div>}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EDUCATION ================= -->
+<section id="education" class="py-4 py-md-5">
+  <div class="container py-3">
+    <p class="eyebrow mono-font"><i class="bi bi-mortarboard me-2"></i>Education</p>
+    <h2 class="logo-font section-title mb-4">// education</h2>
+    <div class="edu-card notched p-4 p-md-5 reveal">
+      <div class="d-flex flex-wrap justify-content-between align-items-start mb-2 gap-2">
+        <h3 class="logo-font edu-title mb-0">B.Tech in Artificial Intelligence and Data Science</h3>
+        <span class="mono-font text-accent">2022 – 2026</span>
+      </div>
+      <p class="mono-font text-secondary mb-3">Excel Engineering College (Autonomous)</p>
+      <p class="text-secondary mb-3">Bachelor of Technology specializing in Artificial Intelligence and Data Science, with a focus on programming, machine learning, data analysis, and software development.</p>
+      <span class="tag-sm mono-font">CGPA: 7.22 / 10</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience" class="py-4 py-md-5">
+  <div class="container py-3">
+    <p class="eyebrow mono-font"><i class="bi bi-briefcase me-2"></i>Experience &amp; Internships</p>
+    <h2 class="logo-font section-title mb-4">// experience</h2>
+
+    <div class="exp-card notched p-4 p-md-5 mb-4 reveal">
+      <div class="d-flex flex-wrap justify-content-between align-items-start mb-2 gap-2">
+        <h3 class="logo-font edu-title mb-0">Python Developer Intern</h3>
+        <span class="mono-font text-accent">Jan 2026 – Present</span>
+      </div>
+      <p class="mono-font text-secondary mb-3">Trycode Innovations</p>
+      <p class="text-secondary mb-3">Working on Python-based web development projects using Django. Gaining hands-on experience in backend development, database integration, debugging, and building practical web applications.</p>
+      <div class="d-flex flex-wrap gap-2">
+        <span class="tag-sm mono-font">Python</span>
+        <span class="tag-sm mono-font">Django</span>
+        <span class="tag-sm mono-font">HTML</span>
+        <span class="tag-sm mono-font">CSS</span>
+        <span class="tag-sm mono-font">JavaScript</span>
+        <span class="tag-sm mono-font">Bootstrap</span>
+        <span class="tag-sm mono-font">SQL</span>
+      </div>
+    </div>
+
+    <div class="exp-card notched p-4 p-md-5 mb-4 reveal">
+      <div class="d-flex flex-wrap justify-content-between align-items-start mb-2 gap-2">
+        <h3 class="logo-font edu-title mb-0">AI &amp; Machine Learning Intern</h3>
+        <span class="mono-font text-accent">Dec 2024 – Jan 2025</span>
+      </div>
+      <p class="mono-font text-secondary mb-3">Edutantr</p>
+      <p class="text-secondary mb-3">Gained practical experience in Artificial Intelligence and Machine Learning concepts. Worked with Python and explored data preprocessing, machine learning workflows, and model development.</p>
+      <div class="d-flex flex-wrap gap-2">
+        <span class="tag-sm mono-font">Python</span>
+        <span class="tag-sm mono-font">Machine Learning</span>
+        <span class="tag-sm mono-font">Pandas</span>
+        <span class="tag-sm mono-font">NumPy</span>
+        <span class="tag-sm mono-font">Scikit-learn</span>
+      </div>
+    </div>
+
+    <div class="exp-card notched p-4 p-md-5 reveal">
+      <div class="d-flex flex-wrap justify-content-between align-items-start mb-2 gap-2">
+        <h3 class="logo-font edu-title mb-0">Web Development Intern</h3>
+      </div>
+      <p class="mono-font text-secondary mb-3">CodeBind Technologies</p>
+      <p class="text-secondary mb-3">Gained hands-on experience in web development and learned the fundamentals of building responsive and user-friendly websites using modern web technologies.</p>
+      <div class="d-flex flex-wrap gap-2">
+        <span class="tag-sm mono-font">HTML</span>
+        <span class="tag-sm mono-font">CSS</span>
+        <span class="tag-sm mono-font">JavaScript</span>
+        <span class="tag-sm mono-font">Bootstrap</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills" class="py-4 py-md-5">
+  <div class="container py-3">
+    <p class="eyebrow mono-font"><i class="bi bi-code-slash me-2"></i>What I work with</p>
+    <h2 class="logo-font section-title mb-4">// skills</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="skill-card p-4 h-100 reveal">
+          <h3 class="mono-font skill-heading mb-3">Skills</h3>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="skill-tag mono-font">Python</span>
+            <span class="skill-tag mono-font">HTML</span>
+            <span class="skill-tag mono-font">JavaScript</span>
+            <span class="skill-tag mono-font">CSS</span>
+            <span class="skill-tag mono-font">SQL</span>
+            <span class="skill-tag mono-font">AI</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="skill-card p-4 h-100 reveal">
+          <h3 class="mono-font skill-heading mb-3">Frameworks</h3>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="skill-tag mono-font">Bootstrap</span>
+            <span class="skill-tag mono-font">Django</span>
+            <span class="skill-tag mono-font">Flask</span>
+            <span class="skill-tag mono-font">OpenCV</span>
+            <span class="skill-tag mono-font">Pandas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects" class="py-4 py-md-5">
+  <div class="container py-3">
+    <p class="eyebrow mono-font"><i class="bi bi-folder2-open me-2"></i>Selected work</p>
+    <h2 class="logo-font section-title mb-4">// projects</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="project-card p-4 h-100 reveal">
+          <span class="mono-font text-accent d-block mb-2">01</span>
+          <h3 class="logo-font project-title mb-3">RePlate</h3>
+          <p class="text-secondary">Django-based food donation platform connecting restaurants with surplus food to people who need it — admin, donor, and user panels.</p>
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <span class="tag-sm mono-font">Django</span>
+            <span class="tag-sm mono-font">Bootstrap</span>
+            <span class="tag-sm mono-font">SQLite</span>
+          </div>
+          <a href="https://github.com/Abhish3kSh4ju" target="_blank" class="mono-font text-accent">View project →</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="project-card p-4 h-100 reveal">
+          <span class="mono-font text-accent d-block mb-2">02</span>
+          <h3 class="logo-font project-title mb-3">Medibyte</h3>
+          <p class="text-secondary">Healthcare appointment web app — patient panel, doctors, appointment status, test results, complaints & feedback.</p>
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <span class="tag-sm mono-font">Django</span>
+            <span class="tag-sm mono-font">HTML/CSS</span>
+          </div>
+          <a href="https://github.com/Abhish3kSh4ju" target="_blank" class="mono-font text-accent">View project →</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="project-card p-4 h-100 reveal">
+          <span class="mono-font text-accent d-block mb-2">03</span>
+          <h3 class="logo-font project-title mb-3">SignSync</h3>
+          <p class="text-secondary">Web-based application that bridges communication between sign language users and non-signers, focusing on accessible sign language recognition and user-friendly interaction.</p>
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <span class="tag-sm mono-font">Python</span>
+            <span class="tag-sm mono-font">Django</span>
+            <span class="tag-sm mono-font">OpenCV</span>
+            <span class="tag-sm mono-font">TensorFlow</span>
+            <span class="tag-sm mono-font">Scikit-learn</span>
+            <span class="tag-sm mono-font">NumPy</span>
+            <span class="tag-sm mono-font">Matplotlib</span>
+            <span class="tag-sm mono-font">Bootstrap</span>
+          </div>
+          <a href="https://github.com/Abhish3kSh4ju" target="_blank" class="mono-font text-accent">View project →</a>
+        </div>
+      </div>
+      <!-- TODO: add more project cards / real links here -->
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="py-4 py-md-5">
+  <div class="container py-3">
+    <div class="contact-box notched p-5 text-center mx-auto reveal">
+      <p class="eyebrow mono-font justify-content-center d-flex"><i class="bi bi-envelope-heart me-2"></i>Get in touch</p>
+      <h2 class="logo-font contact-title mb-4">// let's build<br>something together</h2>
+      <p class="text-secondary mb-5 mx-auto contact-lead">Open to internships, freelance work, and interesting conversations. Reach out through any of these.</p>
+      <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abhishekshaju116@gmail.com" target="_blank" class="contact-link mono-font"><i class="bi bi-envelope me-2"></i>Email</a>
+        <a href="https://wa.me/919544399856" target="_blank" class="contact-link mono-font"><i class="bi bi-whatsapp me-2"></i>WhatsApp</a>
+        <a href="https://github.com/Abhish3kSh4ju" target="_blank" class="contact-link mono-font"><i class="bi bi-github me-2"></i>GitHub</a>
+        <a href="https://www.linkedin.com/in/abhishek-shaju-95a051258" target="_blank" class="contact-link mono-font"><i class="bi bi-linkedin me-2"></i>LinkedIn</a>
+      </div>
+      <a href="resume.pdf" class="btn btn-accent mono-font px-4 py-3" download="Abhishek_Shaju_Resume.pdf">Download resume ↓</a>
+    </div>
+  </div>
+</section>
+
+<button id="scrollRocket" class="notched" aria-label="Scroll">
+  <i class="bi bi-rocket-takeoff-fill"></i>
+</button>
+
+<footer class="text-center py-4 mono-font">
+  designed &amp; built by Abhishek Shaju
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+:root{
+  --bg:#000000;
+  --card:#0d0d0d;
+  --border:#1e1e1e;
+  --accent:#f40d30;
+  --accent-dim:#7a0819;
+  --text-secondary:#8a8a8a;
+  --text-muted:#555555;
+}
+
+/* =====================================================================
+   CUSTOM FONT — "Proto Mono"
+   ---------------------------------------------------------------------
+   Drop your licensed font files (woff2/woff) into a /fonts folder next
+   to this stylesheet and point the src below at them, e.g.:
+
+   @font-face{
+     font-family:'Proto Mono';
+     src:url('fonts/ProtoMono-Bold.woff2') format('woff2'),
+         url('fonts/ProtoMono-Bold.woff')  format('woff');
+     font-weight:700;
+     font-style:normal;
+     font-display:swap;
+   }
+
+   Until those files are added, everything that uses the .logo-font
+   class below falls back to "Chakra Petch" (loaded from Google Fonts
+   in index.html), which has the closest blocky/squared-off letterforms
+   to the reference image. Once you add the real files, uncomment the
+   @font-face block and it will take over automatically — no other
+   CSS needs to change.
+===================================================================== */
+
+/*
+@font-face{
+  font-family:'Proto Mono';
+  src:url('fonts/ProtoMono-Bold.woff2') format('woff2');
+  font-weight:700;
+  font-style:normal;
+  font-display:swap;
+}
+*/
+
+body{
+  background:var(--bg);
+  color:#eaeaea;
+  font-family:'Space Grotesk', sans-serif;
+  overflow-x:hidden;
+}
+
+html{scroll-behavior:smooth;}
+
+a{text-decoration:none;}
+
+/* ---------- fonts ---------- */
+.logo-font{
+  font-family:'Proto Mono', 'Chakra Petch', monospace;
+  font-weight:700;
+  letter-spacing:0.5px;
+}
+.mono-font{font-family:'JetBrains Mono', monospace;}
+
+/* ---------- scroll reveal (placed early so card :hover rules below can win the cascade) ---------- */
+.reveal{
+  opacity:0;
+  transform:translateY(32px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.reveal.in-view{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ---------- ambient background ---------- */
+.bg-fx{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
+}
+#dotGrid{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.glow{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(100px);
+  opacity:0.28;
+}
+.glow-1{
+  width:min(50vw,420px);
+  height:min(50vw,420px);
+  background:var(--accent);
+  top:-10%;
+  left:-8%;
+  animation:floatGlow1 20s ease-in-out infinite;
+}
+.glow-2{
+  width:min(45vw,380px);
+  height:min(45vw,380px);
+  background:#7a0819;
+  bottom:-12%;
+  right:-8%;
+  animation:floatGlow2 24s ease-in-out infinite;
+}
+@keyframes floatGlow1{
+  0%,100%{transform:translate(0,0) scale(1);}
+  50%{transform:translate(6vw,5vh) scale(1.15);}
+}
+@keyframes floatGlow2{
+  0%,100%{transform:translate(0,0) scale(1);}
+  50%{transform:translate(-5vw,-4vh) scale(1.1);}
+}
+@media(prefers-reduced-motion:reduce){
+  .glow-1,.glow-2{animation:none;}
+}
+
+section, footer{position:relative;z-index:1;}
+
+/* ---------- navbar ---------- */
+.navbar{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:1030;
+  background:rgba(0,0,0,0.75);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);
+  padding:14px 0;
+}
+.navbar-brand{color:var(--accent) !important;font-size:14px;}
+.nav-link{color:var(--text-secondary) !important;font-size:13px;transition:color .2s;}
+.nav-link:hover{color:var(--accent) !important;}
+
+/* ---------- buttons ---------- */
+.btn-accent{
+  background:var(--accent);
+  color:#000;
+  border:1px solid var(--accent);
+  font-size:13px;
+  box-shadow:0 0 16px rgba(244,13,48,0.35);
+  transition:box-shadow .25s, background .25s, color .25s;
+}
+.btn-accent:hover{box-shadow:0 0 26px rgba(244,13,48,0.6);}
+.btn-accent:hover{background:transparent;color:var(--accent);}
+
+.btn-outline-ghost{
+  color:#eaeaea;
+  border:1px solid #333;
+  font-size:13px;
+}
+.btn-outline-ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ---------- notch motif (echoes the neopixel logo cut) ---------- */
+.notched{
+  clip-path:polygon(0 14px,14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%);
+}
+
+/* ---------- hero ---------- */
+.hero{min-height:100vh;padding-top:80px;}
+@keyframes blink{50%{opacity:0;}}
+.hero-title{
+  font-size:clamp(28px,6vw,58px);
+  line-height:1.6;
+  color:var(--accent);
+  text-shadow:0 0 8px rgba(244,13,48,0.25);
+}
+.tagline{max-width:520px;font-size:clamp(15px,2vw,19px);}
+
+/* ---------- hero terminal widget ---------- */
+.hero-terminal{
+  opacity:0;
+  animation:fadeUp .6s ease forwards;
+  animation-delay:2.1s;
+}
+.terminal-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  overflow:hidden;
+  transition:transform .25s, border-color .25s, box-shadow .25s;
+  max-width:440px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.terminal-card:hover{
+  transform:translateY(-4px);
+  border-color:var(--accent-dim);
+  box-shadow:0 0 28px rgba(244,13,48,0.2);
+}
+.terminal-head{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 16px;
+  background:#111111;
+  border-bottom:1px solid var(--border);
+}
+.terminal-head .dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  display:inline-block;
+}
+.dot-r{background:#ff5f57;}
+.dot-y{background:#febc2e;}
+.dot-g{background:#28c840;}
+.terminal-title{
+  margin-left:8px;
+  font-size:12px;
+  color:var(--text-muted);
+}
+.terminal-body{
+  padding:22px 20px;
+  font-size:14px;
+  line-height:2;
+  min-height:230px;
+}
+.term-line{margin:0 0 2px;}
+.term-prompt{color:var(--accent);margin-right:6px;}
+.term-cmd{color:#eaeaea;}
+.term-out{color:#7ac292;display:block;margin:2px 0 10px;}
+.term-caret{
+  display:inline-block;
+  width:8px;
+  height:1em;
+  background:var(--accent);
+  vertical-align:middle;
+  margin-left:2px;
+  animation:blink 0.9s steps(1) infinite;
+}
+
+/* ---------- section headings ---------- */
+.eyebrow{
+  font-size:12px;
+  letter-spacing:3px;
+  color:var(--accent);
+  text-transform:uppercase;
+  margin-bottom:14px;
+}
+.section-title{
+  font-size:clamp(20px,3vw,32px);
+  line-height:1.7;
+}
+.eyebrow{display:flex;align-items:center;}
+
+/* ---------- education ---------- */
+.edu-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  transition:transform .25s, border-color .25s, box-shadow .25s;
+}
+.edu-card:hover{
+  transform:translateY(-4px);
+  border-color:var(--accent-dim);
+  box-shadow:0 0 24px rgba(244,13,48,0.18);
+}
+.edu-title{font-size:15px;line-height:1.7;}
+
+/* ---------- experience ---------- */
+.exp-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  transition:border-color .25s, box-shadow .25s;
+}
+.exp-card:hover{border-color:var(--accent-dim);box-shadow:0 0 24px rgba(244,13,48,0.18);}
+
+/* ---------- about ---------- */
+.code-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  font-size:13px;
+  color:var(--text-secondary);
+  transition:transform .25s, border-color .25s, box-shadow .25s;
+}
+.code-card:hover{
+  transform:translateY(-4px);
+  border-color:var(--accent-dim);
+  box-shadow:0 0 24px rgba(244,13,48,0.18);
+}
+.text-accent{color:var(--accent) !important;}
+.text-green{color:#7ac292;}
+
+/* ---------- skills ---------- */
+.skill-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  transition:transform .25s, border-color .25s, box-shadow .25s;
+}
+.skill-card:hover{
+  transform:translateY(-4px);
+  border-color:var(--accent-dim);
+  box-shadow:0 0 24px rgba(244,13,48,0.18);
+}
+.skill-heading{
+  font-size:13px;
+  color:var(--accent);
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.skill-tag{
+  font-size:12px;
+  color:var(--text-secondary);
+  border:1px solid var(--border);
+  padding:6px 12px;
+  transition:all .2s;
+}
+.skill-tag:hover{border-color:var(--accent);color:#eaeaea;}
+
+/* ---------- projects ---------- */
+.project-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+}
+.project-card:hover{
+  transform:translateY(-4px);
+  border-color:var(--accent-dim);
+  box-shadow:0 0 24px rgba(244,13,48,0.18);
+}
+.project-title{font-size:16px;line-height:1.6;}
+.tag-sm{
+  font-size:11px;
+  color:var(--text-muted);
+  border:1px solid var(--border);
+  padding:4px 10px;
+}
+
+/* ---------- contact ---------- */
+.contact-box{
+  background:var(--card);
+  border:1px solid var(--border);
+  max-width:640px;
+  transition:border-color .25s, box-shadow .25s;
+}
+.contact-box:hover{
+  border-color:var(--accent-dim);
+  box-shadow:0 0 30px rgba(244,13,48,0.16);
+}
+.contact-title{font-size:clamp(18px,3vw,26px);line-height:1.7;color:var(--accent);}
+.contact-lead{max-width:460px;}
+.contact-link{
+  color:var(--text-secondary);
+  border:1px solid var(--border);
+  padding:12px 22px;
+  transition:all .2s;
+}
+.contact-link:hover{color:var(--accent);border-color:var(--accent);}
+
+/* ---------- footer ---------- */
+footer{
+  font-size:11px;
+  color:var(--text-muted);
+  border-top:1px solid var(--border);
+}
+
+/* ---------- hero entrance ---------- */
+.hero-greet{
+  opacity:0;
+  animation:fadeUp .6s ease forwards;
+}
+.hero-title{
+  min-height:1.6em;
+}
+.cursor{
+  display:inline-block;
+  width:8px;height:0.85em;
+  background:var(--accent);
+  margin-left:4px;
+  animation:blink 0.9s steps(1) infinite;
+  vertical-align:middle;
+}
+.tagline{
+  opacity:0;
+  animation:fadeUp .6s ease forwards;
+  animation-delay:1.6s;
+}
+.hero-actions, .hero .d-flex.flex-wrap.gap-3{
+  opacity:0;
+  animation:fadeUp .6s ease forwards;
+  animation-delay:1.9s;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(14px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* ---------- scroll reveal ---------- */
+/* ---------- scroll rocket ---------- */
+#scrollRocket{
+  position:fixed;
+  bottom:26px;
+  right:26px;
+  width:52px;
+  height:52px;
+  background:var(--accent);
+  color:#000;
+  border:none;
+  font-size:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:1020;
+  transition:transform .35s ease, background .25s ease;
+  box-shadow:0 0 20px rgba(244,13,48,0.5);
+}
+#scrollRocket:hover{background:#ff3350;box-shadow:0 0 30px rgba(244,13,48,0.75);}
+#scrollRocket.point-down{
+  transform:rotate(180deg);
+}
+
+@media(max-width:767px){
+  .navbar-nav{gap:14px;padding-top:14px;}
+  .terminal-card{max-width:100%;}
+}
