@@ -182,4 +182,46 @@
       });
     });
   }
+
+  // Add floating technology labels around the existing hoodie character.
+  const heroVisual = document.querySelector(".hero-visual");
+  const avatarFrame = heroVisual?.querySelector(".ai-character");
+  if (heroVisual && avatarFrame && !heroVisual.querySelector(".tech-chip")) {
+    const technologies = [
+      ["Python","Py"],["Django","D"],["React","R"],["JavaScript","JS"],
+      ["AI / ML","AI"],["LLMs","LLM"],["RAG","R"],["APIs","API"],
+      ["MongoDB","M"],["GitHub","GH"]
+    ];
+    technologies.forEach(([label,glyph],index) => {
+      const card = document.createElement("div");
+      card.className = "floating-chip tech-chip tech-chip-" + (index + 1);
+      card.setAttribute("role","note");
+      card.setAttribute("aria-label",label);
+      const mark = document.createElement("span");
+      mark.className = "tech-glyph";
+      mark.textContent = glyph;
+      const name = document.createElement("span");
+      name.textContent = label;
+      card.append(mark,name);
+      heroVisual.appendChild(card);
+    });
+  }
+
+  // Give the portrait a restrained depth/parallax response to pointer movement.
+  const portrait = avatarFrame?.querySelector(".portrait-image");
+  if (portrait && !reducedMotion) {
+    heroVisual?.addEventListener("pointermove", event => {
+      const bounds = heroVisual.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - .5;
+      const y = (event.clientY - bounds.top) / bounds.height - .5;
+      portrait.style.setProperty("--avatar-x",(x * 7).toFixed(2) + "px");
+      portrait.style.setProperty("--avatar-y",(y * 6).toFixed(2) + "px");
+      portrait.style.setProperty("--avatar-rotate-y",(x * 3.2).toFixed(2) + "deg");
+      portrait.style.setProperty("--avatar-rotate-x",(y * -2.6).toFixed(2) + "deg");
+    },{passive:true});
+    heroVisual?.addEventListener("pointerleave",() => {
+      ["--avatar-x","--avatar-y","--avatar-rotate-y","--avatar-rotate-x"].forEach(property => portrait.style.removeProperty(property));
+    });
+  }
+
 })();
