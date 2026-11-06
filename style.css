@@ -131,15 +131,10 @@ button{font:inherit}
 .section-heading-row{display:flex;justify-content:space-between;align-items:end}
 .project-profile-link{margin-bottom:7px}
 .projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
-.project-card{display:flex;flex-direction:column;min-height:445px;padding:24px;background:linear-gradient(145deg,rgba(17,30,41,.98),rgba(10,18,27,.98));border:1px solid var(--line);border-radius:17px;transition:transform .25s,border-color .25s}
+.project-card{display:flex;flex-direction:column;min-height:0;padding:24px;background:linear-gradient(145deg,rgba(17,30,41,.98),rgba(10,18,27,.98));border:1px solid var(--line);border-radius:17px;transition:transform .25s,border-color .25s}
 .project-featured{border-color:rgba(64,229,220,.25)}
-.project-top{display:flex;justify-content:space-between;color:var(--dim);font: .57rem var(--mono);letter-spacing:.1em}
+.project-top{display:flex;justify-content:space-between;margin-bottom:24px;color:var(--dim);font: .57rem var(--mono);letter-spacing:.1em}
 .project-top>i{color:var(--accent)}
-.project-mark{width:45px;height:45px;display:grid;place-items:center;margin:24px 0 15px;border-radius:12px;font-size:1.25rem}
-.replate-mark{color:#9cf6d5;background:rgba(84,203,155,.12)}
-.career-mark{color:#8ce7ef;background:rgba(70,185,205,.12)}
-.medibyte-mark{color:#f1a4b3;background:rgba(227,125,147,.12)}
-.signsync-mark{color:#c1afff;background:rgba(151,126,232,.13)}
 .project-card h3{font-size:1.5rem;letter-spacing:-.055em;margin:0}
 .project-subtitle{color:var(--accent);font-size:.73rem;font-weight:700;margin:1px 0 12px}
 .project-description{font-size:.78rem;line-height:1.85;color:var(--muted);margin-bottom:16px}
