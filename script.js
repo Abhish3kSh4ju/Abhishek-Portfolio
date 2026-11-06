@@ -1,198 +1,100 @@
-// interactive dot-grid background — subtle, glows & drifts toward cursor
-(function(){
-  const canvas = document.getElementById('dotGrid');
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let dots = [];
-  let mouse = { x: -9999, y: -9999 };
-  const spacing = 42;
-  const influence = 130;
-  const maxShift = 6;
+(() => {
+  const menuToggle = document.getElementById("menuToggle");
+  const navLinks = document.getElementById("navLinks");
+  const assistant = document.getElementById("avatarAssistant");
+  const assistantToggle = document.getElementById("assistantToggle");
+  const assistantClose = document.getElementById("assistantClose");
+  const assistantMessage = document.getElementById("assistantMessage");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  function buildGrid(){
-    const w = canvas.width = window.innerWidth;
-    const h = canvas.height = window.innerHeight;
-    dots = [];
-    for(let y = spacing / 2; y < h; y += spacing){
-      for(let x = spacing / 2; x < w; x += spacing){
-        dots.push({ baseX: x, baseY: y, x, y });
-      }
-    }
-  }
-
-  function frame(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    dots.forEach(d => {
-      const dx = mouse.x - d.baseX;
-      const dy = mouse.y - d.baseY;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      let targetX = d.baseX;
-      let targetY = d.baseY;
-      let glow = 0;
-
-      if(dist < influence){
-        glow = 1 - dist / influence;
-        const angle = Math.atan2(dy, dx);
-        targetX = d.baseX + Math.cos(angle) * glow * maxShift;
-        targetY = d.baseY + Math.sin(angle) * glow * maxShift;
-      }
-
-      d.x += (targetX - d.x) * 0.12;
-      d.y += (targetY - d.y) * 0.12;
-
-      const alpha = 0.14 + glow * 0.55;
-      const radius = 1.3 + glow * 1.8;
-
-      if(glow > 0.05){
-        ctx.shadowBlur = 10 * glow;
-        ctx.shadowColor = 'rgba(244,13,48,0.8)';
-      } else {
-        ctx.shadowBlur = 0;
-      }
-
-      ctx.beginPath();
-      ctx.fillStyle = `rgba(244,13,48,${alpha})`;
-      ctx.arc(d.x, d.y, radius, 0, Math.PI * 2);
-      ctx.fill();
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("is-open");
+      menuToggle.setAttribute("aria-expanded", String(open));
+      menuToggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+      menuToggle.innerHTML = open ? '<i class="bi bi-x-lg"></i>' : '<i class="bi bi-list"></i>';
     });
-    requestAnimationFrame(frame);
+    navLinks.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      navLinks.classList.remove("is-open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.setAttribute("aria-label", "Open navigation");
+      menuToggle.innerHTML = '<i class="bi bi-list"></i>';
+    }));
   }
 
-  window.addEventListener('resize', buildGrid);
-  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-  window.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
-
-  buildGrid();
-  requestAnimationFrame(frame);
-})();
-
-// typewriter effect for hero name
-const heroName = document.getElementById('heroName');
-if(heroName){
-  const fullText = "ABHISHEK\nSHAJU";
-  let i = 0;
-  function typeChar(){
-    if(i < fullText.length){
-      const ch = fullText.charAt(i);
-      heroName.innerHTML += (ch === '\n') ? '<br>' : ch;
-      i++;
-      setTimeout(typeChar, 70);
-    }
-  }
-  setTimeout(typeChar, 500);
-}
-
-// ---------- hero terminal widget: whoami.py style typing loop ----------
-(function(){
-  const body = document.getElementById('termBody');
-  if(!body) return;
-
-  // edit this list to change what the terminal "types" — cmd is the
-  // fake command, out is the response line printed under it
-  const sequence = [
-    { cmd: 'whoami',   out: 'Python Developer .py' },
-    { cmd: 'build',    out: 'Building web applications' },
-    { cmd: 'mindset',  out: 'Problem Solver' },
-    { cmd: 'stack',    out: 'Python · Django · SQL' },
-    { cmd: 'status',   out: 'Open to opportunities' }
-  ];
-
-  const TYPE_SPEED = 55;      // ms per character while "typing" a command
-  const OUT_PAUSE = 350;      // pause before showing the output line
-  const HOLD_AFTER_LINE = 900;// pause after a finished line before next command
-  const MAX_VISIBLE_PAIRS = 4;// how many cmd/out pairs stay on screen before it clears
-  const RESTART_PAUSE = 1400; // pause before the terminal clears & restarts
-
-  let seqIndex = 0;
-  let visiblePairs = 0;
-
-  function makeLine(){
-    const p = document.createElement('p');
-    p.className = 'term-line';
-    const prompt = document.createElement('span');
-    prompt.className = 'term-prompt';
-    prompt.textContent = '$';
-    const cmd = document.createElement('span');
-    cmd.className = 'term-cmd';
-    const caret = document.createElement('span');
-    caret.className = 'term-caret';
-    p.appendChild(prompt);
-    p.appendChild(cmd);
-    p.appendChild(caret);
-    body.appendChild(p);
-    return { p, cmd, caret };
+  let bubbleTimeout;
+  function guide(message) {
+    if (!assistant || !assistantMessage || assistant.classList.contains("is-minimized")) return;
+    assistantMessage.textContent = message;
+    assistant.classList.add("is-speaking");
+    window.clearTimeout(bubbleTimeout);
+    bubbleTimeout = window.setTimeout(() => assistant.classList.remove("is-speaking"), 2600);
   }
 
-  function typeCommand(cmdEl, caretEl, text, cb){
-    let i = 0;
-    (function step(){
-      if(i <= text.length){
-        cmdEl.textContent = ' ' + text.slice(0, i);
-        i++;
-        setTimeout(step, TYPE_SPEED);
-      } else {
-        caretEl.remove();
-        setTimeout(cb, OUT_PAUSE);
+  if (assistantToggle && assistant && assistantClose) {
+    assistantToggle.addEventListener("click", () => {
+      const minimized = assistant.classList.toggle("is-minimized");
+      assistantToggle.setAttribute("aria-expanded", String(!minimized));
+      if (!minimized) guide("Hey again! Pick a section and I’ll help you explore Abhi’s work.");
+    });
+    assistantClose.addEventListener("click", () => {
+      assistant.classList.add("is-minimized");
+      assistantToggle.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  // The guide responds to interactions within this page only. No camera, microphone or
+  // off-page monitoring is used; messages are triggered by navigation, focus and scroll.
+  const guideMessages = {
+    home: "Hi! I’m Abhi’s portfolio guide. Explore the projects, skills and experience below.",
+    about: "Abhi is a B.Tech AI & Data Science graduate with hands-on Python and Django experience.",
+    skills: "Here’s the toolkit from Abhi’s resume — Python, Django, Flask, Streamlit and more.",
+    experience: "Abhi has completed three internships across Python full stack, AI/ML and web development.",
+    projects: "Explore the four projects. RePlate and CareerAI have live demos you can open.",
+    resume: "Want the details? Download Abhi’s resume as a PDF from this section.",
+    contact: "Let’s connect — reach Abhi through email, LinkedIn or GitHub."
+  };
+
+  const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio > 0.25) {
+        const section = entry.target.dataset.section;
+        if (guideMessages[section]) guide(guideMessages[section]);
       }
-    })();
-  }
+    });
+  }, { threshold: [0.25, 0.45, 0.7] });
 
-  function printOutput(item, after){
-    const out = document.createElement('span');
-    out.className = 'term-out';
-    out.textContent = item.out;
-    body.appendChild(out);
-    visiblePairs++;
-    setTimeout(after, HOLD_AFTER_LINE);
-  }
+  document.querySelectorAll("[data-section]").forEach(section => sectionObserver.observe(section));
 
-  function next(){
-    if(visiblePairs >= MAX_VISIBLE_PAIRS){
-      // clear and restart the loop
-      setTimeout(() => {
-        body.innerHTML = '';
-        visiblePairs = 0;
-        next();
-      }, RESTART_PAUSE);
-      return;
-    }
-    const item = sequence[seqIndex % sequence.length];
-    seqIndex++;
-    const { cmd, caret } = makeLine();
-    typeCommand(cmd, caret, item.cmd, () => printOutput(item, next));
-  }
-
-  setTimeout(next, 900);
-})();
-
-// scroll-reveal animation for sections & cards
-const revealEls = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.classList.add('in-view');
-      revealObserver.unobserve(entry.target);
-    }
+  document.addEventListener("pointerover", event => {
+    const target = event.target.closest("[data-guide]");
+    if (target && target.dataset.guide) guide(target.dataset.guide);
   });
-}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  document.addEventListener("focusin", event => {
+    const target = event.target.closest("[data-guide]");
+    if (target && target.dataset.guide) guide(target.dataset.guide);
+  });
 
-revealEls.forEach(el => revealObserver.observe(el));
-
-// floating rocket: scroll to top / bottom
-const rocket = document.getElementById('scrollRocket');
-if(rocket){
-  function updateRocket(){
-    const nearTop = window.scrollY < 200;
-    rocket.classList.toggle('point-down', nearTop);
-    rocket.setAttribute('aria-label', nearTop ? 'Scroll to bottom' : 'Scroll to top');
-  }
-  rocket.addEventListener('click', () => {
-    const nearTop = window.scrollY < 200;
-    window.scrollTo({
-      top: nearTop ? document.body.scrollHeight : 0,
-      behavior: 'smooth'
+  document.querySelectorAll(".project-card").forEach(card => {
+    card.addEventListener("click", event => {
+      if (event.target.closest("a")) return;
+      if (card.dataset.guide) guide(card.dataset.guide);
+    });
+    card.addEventListener("focusin", () => {
+      if (card.dataset.guide) guide(card.dataset.guide);
     });
   });
-  window.addEventListener('scroll', updateRocket);
-  updateRocket();
-}
+
+  // Smooth in-page navigation, with native behavior retained for reduced motion.
+  if (!reducedMotion) {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener("click", event => {
+        const destination = document.querySelector(anchor.getAttribute("href"));
+        if (!destination) return;
+        event.preventDefault();
+        destination.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", anchor.getAttribute("href"));
+      });
+    });
+  }
+})();
