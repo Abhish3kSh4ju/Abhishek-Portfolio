@@ -126,43 +126,6 @@
     counters.forEach(animateCounter);
   }
 
-  const trackedEyes = [...document.querySelectorAll(".tracked-eye")];
-  let pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-  let eyeFrame = 0;
-  function movePupils() {
-    trackedEyes.forEach(eye => {
-      const pupil = eye.querySelector(".eye-pupil");
-      if (!pupil) return;
-      const rect = eye.getBoundingClientRect();
-      if (!rect.width || !rect.height) return;
-      const dx = pointer.x - (rect.left + rect.width / 2);
-      const dy = pointer.y - (rect.top + rect.height / 2);
-      const maxTravel = eye.closest(".guide-avatar") ? Math.max(0.7, rect.width * 0.17) : Math.max(2.5, rect.width * 0.22);
-      const distance = Math.hypot(dx, dy) || 1;
-      const scale = Math.min(1, maxTravel / distance);
-      pupil.style.transform = "translate3d(" + (dx * scale) + "px," + (dy * scale * 0.72) + "px,0)";
-    });
-    eyeFrame = 0;
-  }
-  document.addEventListener("pointermove", event => {
-    pointer = { x: event.clientX, y: event.clientY };
-    if (!eyeFrame) eyeFrame = requestAnimationFrame(movePupils);
-  }, { passive: true });
-  window.addEventListener("resize", () => {
-    if (!eyeFrame) eyeFrame = requestAnimationFrame(movePupils);
-  }, { passive: true });
-  requestAnimationFrame(movePupils);
-
-  function scheduleBlink() {
-    const delay = 2600 + Math.random() * 2400;
-    window.setTimeout(() => {
-      trackedEyes.forEach(eye => eye.classList.add("is-blinking"));
-      window.setTimeout(() => trackedEyes.forEach(eye => eye.classList.remove("is-blinking")), 135);
-      scheduleBlink();
-    }, delay);
-  }
-  if (!reducedMotion) scheduleBlink();
-
   if (!reducedMotion) {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener("click", event => {
