@@ -416,3 +416,7 @@ button{font:inherit}
 @media(max-width:850px){.hero{grid-template-columns:1fr;min-height:auto;padding:65px 0 95px}.hero-copy{max-width:700px}.hero-workspace{min-height:470px;margin-top:10px}.workspace-window{width:min(100%,560px)}.workspace-float-top{right:2%}.workspace-float-bottom{left:2%}.scroll-cue{bottom:25px}}
 @media(max-width:600px){.hero-workspace{min-height:390px;margin:10px -2px 0}.workspace-content{padding:18px 12px;font-size:.58rem}.workspace-window-head{padding:0 11px}.workspace-window-foot{padding:0 11px;font-size:.5rem}.line-no{width:25px}.code-indent{padding-left:18px}.workspace-float{padding:9px 10px;gap:8px}.workspace-float>i{width:28px;height:28px}.workspace-float b{font-size:.59rem}.workspace-float small{font-size:.47rem}.workspace-float-top{top:0;right:0}.workspace-float-bottom{bottom:4%;left:0}.workspace-caption{right:2%;bottom:-1%;font-size:.48rem}}
 @media(prefers-reduced-motion:reduce){.workspace-float{animation:none}.workspace-window{transform:none}}
+
+
+/* Keep the MediByte preview crisp and avoid stretching */
+.project-image{object-fit:contain;object-position:center;background:#0b1720;image-rendering:auto;}
