@@ -126,6 +126,50 @@
     counters.forEach(animateCounter);
   }
 
+
+  // Smooth cursor tracking for the character's two pupils.
+  const trackedEyes = [...document.querySelectorAll("#aiCharacter .tracked-eye")];
+  let pointerPosition = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  let pupilFrame = 0;
+
+  function updatePupils() {
+    trackedEyes.forEach(eye => {
+      const pupil = eye.querySelector(".eye-pupil");
+      if (!pupil) return;
+      const bounds = eye.getBoundingClientRect();
+      if (!bounds.width || !bounds.height) return;
+      const dx = pointerPosition.x - (bounds.left + bounds.width / 2);
+      const dy = pointerPosition.y - (bounds.top + bounds.height / 2);
+      const maxTravel = bounds.width * 0.22;
+      const distance = Math.hypot(dx, dy) || 1;
+      const ratio = Math.min(1, maxTravel / distance);
+      pupil.style.transform = "translate3d(" + (dx * ratio) + "px," + (dy * ratio * 0.7) + "px,0)";
+    });
+    pupilFrame = 0;
+  }
+
+  document.addEventListener("pointermove", event => {
+    pointerPosition = { x: event.clientX, y: event.clientY };
+    if (!pupilFrame) pupilFrame = requestAnimationFrame(updatePupils);
+  }, { passive: true });
+  window.addEventListener("resize", () => {
+    if (!pupilFrame) pupilFrame = requestAnimationFrame(updatePupils);
+  }, { passive: true });
+  requestAnimationFrame(updatePupils);
+
+  function blinkEyes() {
+    if (reducedMotion) return;
+    const delay = 2800 + Math.random() * 2300;
+    window.setTimeout(() => {
+      trackedEyes.forEach(eye => eye.classList.add("is-blinking"));
+      window.setTimeout(() => {
+        trackedEyes.forEach(eye => eye.classList.remove("is-blinking"));
+        blinkEyes();
+      }, 145);
+    }, delay);
+  }
+  blinkEyes();
+
   if (!reducedMotion) {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener("click", event => {
