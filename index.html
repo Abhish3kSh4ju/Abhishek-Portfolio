@@ -54,23 +54,27 @@
         </div>
       </div>
 
-      <div class="hero-visual">
-        <div class="portrait-orbit orbit-a" aria-hidden="true"></div>
-        <div class="portrait-orbit orbit-b" aria-hidden="true"></div>
-        <div class="portrait-card">
-          <div class="portrait-topline"><span>PROFILE_IMAGE.JPG</span><span class="live-label"><span class="status-dot"></span> ONLINE</span></div>
-          <div class="portrait-image-wrap">
-            <img src="assets/abhishek-avatar.jpg" alt="Portrait of Abhishek Shaju" class="portrait-image">
-            <div class="portrait-scan" aria-hidden="true"></div>
+      <div class="hero-visual avatar-stage">
+        <div class="avatar-halo halo-one"></div><div class="avatar-halo halo-two"></div>
+        <div class="avatar-status"><span class="status-dot"></span> DIGITAL TWIN / ONLINE</div>
+        <div class="ai-character" id="aiCharacter" aria-label="Animated futuristic AI character">
+          <div class="character-aura"></div><div class="character-head">
+            <div class="character-hair"></div><div class="character-ear ear-left"></div><div class="character-ear ear-right"></div>
+            <div class="character-face">
+              <div class="character-brow brow-left"></div><div class="character-brow brow-right"></div>
+              <div class="character-eye eye-left"><span class="eye-white"><i class="eye-pupil"></i></span></div>
+              <div class="character-eye eye-right"><span class="eye-white"><i class="eye-pupil"></i></span></div>
+              <div class="character-nose"></div><div class="character-mouth"></div>
+              <div class="character-blush blush-left"></div><div class="character-blush blush-right"></div>
+            </div>
+            <div class="character-neck"></div>
           </div>
-          <div class="portrait-footer"><span>ABHISHEK SHAJU</span><span>PYTHON / FULL STACK</span></div>
+          <div class="character-body"><div class="body-collar"></div><div class="body-core"><span>AI</span></div><div class="body-circuit circuit-left"></div><div class="body-circuit circuit-right"></div></div>
+          <div class="character-caption">ABHI <span>AI GUIDE</span></div>
         </div>
         <div class="floating-chip chip-top"><i class="bi bi-braces"></i> Python · Django</div>
-        <div class="floating-chip chip-bottom"><i class="bi bi-cpu"></i> AI-powered apps</div>
-        <div class="hero-terminal">
-          <div class="terminal-head"><span class="terminal-lights"><i></i><i></i><i></i></span><span>abhishek.py</span><i class="bi bi-three-dots"></i></div>
-          <div class="terminal-content"><span class="terminal-muted">class</span> Developer:<br><span class="terminal-indent">build(<span class="terminal-string">"useful things"</span>)</span><br><span class="terminal-indent terminal-muted">return</span> <span class="terminal-string">"always_learning"</span><span class="terminal-cursor">_</span></div>
-        </div>
+        <div class="floating-chip chip-bottom"><i class="bi bi-cpu"></i> Cursor-aware avatar</div>
+        <div class="hero-terminal"><div class="terminal-head"><span class="terminal-lights"><i></i><i></i><i></i></span><span>abhishek.py</span><i class="bi bi-three-dots"></i></div><div class="terminal-content"><span class="terminal-muted">class</span> Developer:<br><span class="terminal-indent">build(<span class="terminal-string">"useful things"</span>)</span><br><span class="terminal-indent terminal-muted">return</span> <span class="terminal-string">"always_learning"</span><span class="terminal-cursor">_</span></div></div>
       </div>
       <a class="scroll-cue" href="#about"><span></span> SCROLL TO EXPLORE</a>
     </section>
@@ -187,10 +191,7 @@
       <span class="assistant-label"><span class="status-dot"></span> ABHI AI GUIDE</span>
       <p id="assistantMessage">Hey! I’m Abhi’s portfolio guide. Explore the work, and I’ll point you in the right direction.</p>
     </div>
-    <button class="assistant-avatar" id="assistantToggle" type="button" aria-label="Open Abhi AI guide" aria-expanded="true">
-      <img src="assets/abhishek-avatar.jpg" alt="">
-      <span class="assistant-pulse"></span>
-    </button>
+    <button class="assistant-avatar assistant-bot-button" id="assistantToggle" type="button" aria-label="Open Abhi AI guide" aria-expanded="true"><span class="mini-bot-face"><i></i><i></i></span><span class="assistant-pulse"></span></button>
   </aside>
 
   <footer class="site-footer"><a class="brand" href="#home"><span class="brand-bracket">&lt;</span>AS<span class="brand-bracket">/&gt;</span></a><span>Designed &amp; built by Abhishek Shaju</span><a href="#home">Back to top <i class="bi bi-arrow-up"></i></a></footer>

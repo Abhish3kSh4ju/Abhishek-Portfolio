@@ -98,3 +98,36 @@
     });
   }
 })();
+
+// Cursor-tracking eyes: the pupils follow the pointer continuously, with a gentle clamp.
+(() => {
+ const eyes = [...document.querySelectorAll(".eye-pupil")];
+ const face = document.querySelector(".character-face");
+ if (!eyes.length || !face) return;
+ let frame = 0, point = {x: innerWidth/2, y: innerHeight/2};
+ const update = () => {
+   const rect = face.getBoundingClientRect();
+   const cx = rect.left + rect.width/2, cy = rect.top + rect.height/2;
+   const dx = point.x-cx, dy = point.y-cy, angle = Math.atan2(dy,dx);
+   const distance = Math.min(7, Math.hypot(dx,dy)/35);
+   const x = Math.cos(angle)*distance, y = Math.sin(angle)*distance;
+   eyes.forEach(eye => { eye.style.transform = `translate(${x}px,${y}px)`; });
+   frame = 0;
+ };
+ document.addEventListener("pointermove", e => {
+   point={x:e.clientX,y:e.clientY};
+   if(!frame) frame=requestAnimationFrame(update);
+ }, {passive:true});
+ window.addEventListener("resize", () => { if(!frame) frame=requestAnimationFrame(update); });
+})();
+
+// Reveal sections and cards as they enter the viewport; stagger sibling cards.
+(() => {
+ const targets=document.querySelectorAll(".section-heading,.about-grid,.skill-card,.timeline-item,.project-card,.resume-panel,.education-row,.certifications,.contact-panel");
+ if(!("IntersectionObserver" in window)){targets.forEach(el=>el.classList.add("is-visible"));return;}
+ targets.forEach((el,i)=>{el.classList.add("reveal-on-scroll");if(el.matches(".skill-card,.project-card"))el.style.transitionDelay=`${(i%4)*90}ms`;});
+ const reveal=new IntersectionObserver(entries=>entries.forEach(entry=>{
+   if(entry.isIntersecting){entry.target.classList.add("is-visible");reveal.unobserve(entry.target);}
+ }),{threshold:.12,rootMargin:"0px 0px -45px 0px"});
+ targets.forEach(el=>reveal.observe(el));
+})();
