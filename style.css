@@ -297,12 +297,15 @@ button{font:inherit}
 /* Human AI character portrait */
 
 .portrait-image{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center 46%;user-select:none}
-.eye-layer{position:absolute;inset:0;z-index:4;pointer-events:none}
-.tracked-eye{position:absolute;display:block;width:9%;height:4.2%;border-radius:50%;overflow:hidden;pointer-events:none;transition:transform .08s ease-out}
-.eye-left{left:30.5%;top:32.7%}
-.eye-right{left:48.2%;top:32.7%}
-.eye-pupil{position:absolute;left:34%;top:12%;width:32%;height:76%;border-radius:50%;background:radial-gradient(circle at 48% 48%,#02070a 0 35%,#153f42 39% 65%,#58dcd4 70% 76%,#0b1c22 80%);box-shadow:0 0 3px rgba(0,0,0,.9);will-change:transform;transition:transform .08s ease-out}
-.eyelid{position:absolute;inset:-1px 0;border-radius:50%;background:linear-gradient(160deg,#b88770,#d2a18a 55%,#9a6b59);transform:scaleY(0);transform-origin:top;transition:transform .09s ease;opacity:.98}
-.tracked-eye.is-blinking .eyelid{transform:scaleY(1)}
 .guide-avatar{position:relative;width:45px;height:45px;flex:none;overflow:hidden;display:block;border:1px solid rgba(64,229,220,.65);border-radius:50%;background:#0b1720;box-shadow:0 0 14px rgba(64,229,220,.13)}
 .guide-avatar img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block}
+
+
+/* Simple floating 2D character: no eye tracking or interactive overlays */
+.ai-character{width:min(520px,92%);aspect-ratio:3/4;border:0;border-radius:0;overflow:visible;background:transparent;box-shadow:none;animation:characterFloat 4.8s ease-in-out infinite;}
+.ai-character:before{display:none;}
+.ai-character .portrait-image{object-fit:contain;object-position:center;width:100%;height:100%;filter:drop-shadow(0 24px 38px rgba(0,0,0,.32));}
+.hero-visual{min-height:590px;}
+@keyframes characterFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+@media(max-width:850px){.ai-character{width:min(500px,82%);}}
+@media(max-width:600px){.hero-visual{min-height:430px}.ai-character{width:min(420px,88%);}}
