@@ -420,3 +420,9 @@ button{font:inherit}
 
 /* Keep the MediByte preview crisp and avoid stretching */
 .project-image{object-fit:contain;object-position:center;background:#0b1720;image-rendering:auto;}
+
+
+/* MediByte and SignSync use matching text-first project cards */
+.projects-grid{align-items:stretch;}
+.projects-grid>.project-card:not(.project-featured){min-height:390px;}
+@media(max-width:600px){.projects-grid>.project-card:not(.project-featured){min-height:0;}}
